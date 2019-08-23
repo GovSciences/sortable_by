@@ -3,16 +3,18 @@
 module SortableBy
   class TableHeader
     attr_reader :context
+    attr_reader :engine
     attr_accessor :header_html
 
     # Forward view helper methods to the view context
     delegate :concat, :content_tag, :link_to, to: :context
 
-    def initialize(path_helper:, model: nil, params: {}, context:, icon:)
+    def initialize(path_helper:, model: nil, params: {}, context:, engine:, icon:)
       @path_helper = path_helper
       @model = model
       @params = params
       @context = context
+      @engine = engine
       @icon = icon.to_sym
     end
 
@@ -79,7 +81,7 @@ module SortableBy
 
     def link_to_for_attribute(attribute, label)
       label ||= translated_attribute(attribute)
-      path = context.send(
+      path = engine.send(
         @path_helper,
         @params.merge(sort: attribute, dir: determine_direction(attribute))
       )

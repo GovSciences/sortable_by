@@ -4,6 +4,7 @@ module SortableBy
     # Build a table header for a model
     #
     # * path_helper: The helper method you want to use to generate URLs.
+    # * engine: Where to run the path helper (optional)
     # * model: The class we should use for translations (optional)
     # * permit: Array of request params that are forwarded to the sort links
     #
@@ -23,12 +24,13 @@ module SortableBy
     #
     # <%= t.header :name, label: 'Full Name' %>
     #
-    def sortable_table_header(path_helper, model: nil, permit: [], icon: SortableBy.icon_strategy, &block)
+    def sortable_table_header(path_helper, model: nil, engine: nil, permit: [], icon: SortableBy.icon_strategy, &block)
       header = SortableBy::TableHeader.new(
         path_helper: path_helper,
         model: model,
         params: params.permit(permit.concat(SortableBy.params_list)),
         context: self,
+        engine: engine.presence || self,
         icon: icon)
       header.capture(block) if block
       header.to_html
