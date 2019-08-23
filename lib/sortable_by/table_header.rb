@@ -83,7 +83,7 @@ module SortableBy
       label ||= translated_attribute(attribute)
       path = engine.send(
         @path_helper,
-        @params.merge(sort: attribute, dir: determine_direction(attribute))
+        @params.merge(sort: attribute, dir: determine_direction(attribute)).to_h
       )
       link_to(label, path)
     end
