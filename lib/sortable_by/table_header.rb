@@ -99,7 +99,7 @@ module SortableBy
 
     def self.fontawesome(context, dir)
       icon_class = dir == 'asc' ? 'fa-caret-up' : 'fa-caret-down'
-      context.content_tag :i, '', class: "fa #{icon_class}"
+      context.content_tag :i, '', class: "fa fa-fw #{icon_class}"
     end
 
     def self.glyph(context, dir)
