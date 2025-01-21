@@ -1,7 +1,7 @@
 module SortableBy
   class Engine < ::Rails::Engine
     initializer :controller do
-      ActionController::Base.send(:include, SortableBy::Params)
+      ActiveSupport.on_load(:action_controller) { include SortableBy::Params }
     end
   end
 end

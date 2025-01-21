@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe SortableBy::Params, type: :controller do
 
+  ActiveSupport.on_load(:action_controller) { include SortableBy::Params }
+
   controller(ActionController::Base) do
     sortable_by :first_name, :last_name, :email,
                 display_name: [:first_name, :last_name],

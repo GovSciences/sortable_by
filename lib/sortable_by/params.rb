@@ -3,9 +3,7 @@ module SortableBy
     extend ActiveSupport::Concern
 
     module ClassMethods
-      attr_accessor :default_sort_attribute
-      attr_accessor :default_sort_dir
-      attr_accessor :sortable_mapping
+      attr_accessor :default_sort_attribute, :default_sort_dir, :sortable_mapping
 
       # Define attributes you wish to sort by
       #
@@ -27,7 +25,7 @@ module SortableBy
       def sortable_by(*attributes, **options)
         @default_sort_attribute = options.delete(:default)
         @default_sort_dir = options.delete(:direction) || :asc
-        @sortable_mapping = options.merge(attributes.map { |att| [att, att] }.to_h)
+        @sortable_mapping = options.merge(attributes.to_h { |att| [att, att] })
       end
     end
 
@@ -56,6 +54,7 @@ module SortableBy
     #
     def sortable_query
       return unless sort_attribute
+
       normalize_sort_value(
         sort_attribute,
         sort_direction
@@ -66,13 +65,14 @@ module SortableBy
     #
     def normalize_sort_value(sort_by, direction)
       mapping = self.class.sortable_mapping[sort_by]
-      if mapping.is_a? Symbol
+      case mapping
+      when Symbol
         { mapping => sort_direction }
-      elsif mapping.is_a? String
+      when String
         mapping.gsub(':dir', sort_direction.to_s)
-      elsif mapping.is_a? Array
-        mapping.map { |att| [att, direction] }.to_h
-      elsif mapping.is_a? Proc
+      when Array
+        mapping.index_with { |_att| direction }
+      when Proc
         mapping.call(direction)
       else
         logger.debug("WARNING: Sort attribute '#{sort_by}' is not recognized. Did you mean to pass it to sortable_by?")

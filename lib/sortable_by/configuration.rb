@@ -7,5 +7,5 @@ module SortableBy
   self.params_list = [:sort, :dir, :search, :tab]
 
   # Default icon strategy to be used
-  self.icon_strategy = :glyph
+  self.icon_strategy = :basic
 end

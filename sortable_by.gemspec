@@ -1,4 +1,4 @@
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require 'sortable_by/version'
@@ -17,11 +17,13 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
+  s.required_ruby_version = '>= 3.1'
   s.add_dependency 'rails', '>= 5.0'
 
+  s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'pg'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop-rails'
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

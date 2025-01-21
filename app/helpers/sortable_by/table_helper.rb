@@ -26,8 +26,8 @@ module SortableBy
     #
     def sortable_table_header(path_helper, model: nil, engine: nil, permit: [], icon: SortableBy.icon_strategy, &block)
       header = SortableBy::TableHeader.new(
-        path_helper: path_helper,
-        model: model,
+        path_helper:,
+        model:,
         params: params.permit(permit.concat(SortableBy.params_list)),
         context: self,
         engine: engine.presence || self,

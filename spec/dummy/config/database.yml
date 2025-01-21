@@ -9,6 +9,10 @@ default: &default
   encoding: unicode
   pool: 5
   timeout: 5000
+  host: localhost
+  port: 5433
+  user: postgres
+  password: password
 
 test:
   <<: *default
